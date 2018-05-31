@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8" />
+    <title>Concentration</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway+Dots" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+            <h1>Memory Game</h1>
+        </header>
+
+        <div class="rating">
+            <p class="star-container">
+                <i class="star1 fa fa-star"></i> <i class="star2 fa fa-star"></i> <i class="star3 fa fa-star"></i>
+            </p>
+            <p class="moves">Moves Taken: 0</p>
+            <p class="timer"> Time: 00: 00</p>
+            <button class="replay"> Restart</button>
+        </div>
+
+
+        <table id="game-board">
+            <tr class="card-container">
+                <!--icons made by Freepik from www.flaticon.com -->
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/774/774845.svg" alt="Koi icon" class="koi" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/827/827284.svg" alt="bull skull icon" class="cow-skull" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/290/290437.svg" alt="bird icon" class="bird" /></td>
+
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/235/235423.svg" alt="butterfly icon" class="butterfly" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/836/836118.svg" alt="hamburger icon" class="hamburger" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/590/590772.svg" alt="strawberry icon" class="strawberry" /></td>
+
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/629/629594.svg" alt="shooting-star icon" class="shooting-star" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/774/774834.svg" alt="octopus icon" class="octopus" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/774/774853.svg" alt="lotus icon" /></td>
+
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/774/774845.svg" alt="Koi icon" class="koi" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/827/827284.svg" alt="bull skull icon" class="cow-skull" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/290/290437.svg" alt="bird icon" class="bird" /></td>
+
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/235/235423.svg" alt="butterfly icon" class="butterfly" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/836/836118.svg" alt="hamburger icon" class="hamburger" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/590/590772.svg" alt="strawberry icon" class="strawberry" /></td>
+
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/629/629594.svg" alt="shooting-star icon" class="shooting-star" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/774/774834.svg" alt="octopus icon" class="octopus" /></td>
+                <td class="card hidden"> <img src="https://image.flaticon.com/icons/svg/774/774853.svg" alt="lotus icon" /></td>
+            </tr>
+        </table>
+        <div class="winning-msg">
+            <p>You won! </p>
+            <p class="winning-time"> Total time taken:  <p/>
+            <p class="winning-stars">Star rating: </p>
+            <button class="replay">Play Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Trebuchet MS', sans-serif;
+    background-color: #dcecec;
+}
+
+
+#header {
+    color: #464575;
+    background-color: #FFFFFF;
+    font-family: 'Raleway Dots', cursive;
+    font-size: 30px;
+    width:100%;
+}
+
+h1 {
+    padding-top:10px;
+    padding-bottom:10px;
+    margin:0;
+}
+
+.rating {
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    width: 100%;
+    background-color: #667F89;
+    color: lightyellow;
+}
+.rating p {
+    margin-left: 30px;
+}
+star {
+    margin-left: 0;
+}
+.rating p:first-child{
+    margin-left:0;
+}
+
+#game-board {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+.card-container {
+    border-radius:4px;
+    padding: 10px;
+    padding-bottom: 20px;
+    width: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    justify-content: center;
+    background-color:cadetblue;
+}
+
+.card {
+    background-color: lightyellow;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+    margin:3px;
+    width: 70px;
+    height: 70px;
+    backface-visibility:initial;
+}
+.hidden{
+    background-color: #464575;
+}
+.hidden img {
+    display: none;
+}
+
+.flip {
+    transform: rotateY(180deg);
+}
+
+.winning-msg {
+    top: 40%;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    z-index: 2;
+    color: #464575;
+    background-color: rgba(186, 233, 221, 0.8);
+    border-radius: 3px;
+    border: solid 6px rgba(186, 233, 221, 0.8);
+    transition: ease 1s;
+    transform: translateY(-10000px);
+}
+
+
+.winning-msg p:first-child {
+    margin-top: 40px;
+    font-size: 40px;
+}
+
+.winning-msg p {
+    position:relative;
+    margin-top: 10px;
+    font-size: 25px;
+}
+
+.show-msg {
+    transform: translateY(-200px);
+}
+.winning-stars .fa-star {
+    color: #fffc9a;
+}
+.rating button {
+    color: lightyellow;
+    border: none;
+    border-radius: 4px;
+    background-color: #456378;
+    font-size: 16px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin: 10px 0 10px 30px;
+}
+
+.winning-msg button{
+    position: relative;
+    color: lightyellow;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    padding: 20px 20px 20px 20px;
+    background-color: rgb(95, 119, 172);
+}
+
+
+@media screen and (max-width: 450px) {
+    .card {
+        width: 80px;
+        height: 80px;
+    }
+
+    .card-container {
+        width: 360px;
+    }
+    #header {
+        font-size: 20px;
+        font-weight:bold;
+    }
+    .rating {
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width: 650px) {
+    .card {
+        width: 100px;
+        height: 100px;
+    }
+
+    .card-container {
+        width: 700px;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .card {
+        width: 130px;
+        height: 130px;
+    }
+
+    .card-container {
+        width: 800px;
+    }
+}
+
+@media screen and (min-width: 880px) {
+
+    .card {
+        width: 150px;
+        height: 150px;
+    }
+
+    .card-container {
+        width: 1000px;
+    }
+}
+
