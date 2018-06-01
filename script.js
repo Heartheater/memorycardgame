@@ -13,7 +13,7 @@ let min = 0;
 getCards();
 
 $('.card').on("click", function() {
-    //flip card when clicked, but ignore if it's already flipped
+    //ignore card if it's already flipped
     if (!($(this).hasClass("flip"))) {
         flipCard(this);
         checkTurnedCards(this);
@@ -21,10 +21,10 @@ $('.card').on("click", function() {
         moves += 1;
         displayMoves(moves);
         updateRatingStars();
-    }
-    //start timer when first card is clicked
-    if (moves === 1) {
-        startTimer();
+        //start timer when first card is clicked
+        if (moves === 1) {
+            startTimer();
+        }
     }
     return;
 });
@@ -169,15 +169,12 @@ function updateRatingStars() {
     if (moves <= 22) {
         // three stars
         starContainer.innerHTML = "<i class='fa fa-star'> </i><i class='fa fa-star'> </i><i class='fa fa-star'> </i>";
-    } else if (moves > 22 && moves < 45) {
+    } else if (moves > 22 && moves < 46) {
         // two stars
         starContainer.innerHTML = "<i class='fa fa-star'> </i><i class='fa fa-star'> </i><i class='far fa-star'> </i>";
-    } else if (moves >= 45 && moves < 70) {
+    } else{
         // one star
         starContainer.innerHTML = "<i class='fa fa-star'> </i><i class='far fa-star'> </i><i class='far fa-star'> </i>";
-    } else {
-        // zero stars
-        starContainer.innerHTML = "<i class='far fa-star'> </i><i class='far fa-star'> </i><i class='far fa-star'> </i>";
     }
 }
 
