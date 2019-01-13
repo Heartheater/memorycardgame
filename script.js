@@ -1,79 +1,114 @@
 "use strict";
 
-let startingCards = initialDeck();
-let shuffledCards = shuffle(startingCards);
+//get the starting cards from the DOM
+let cardDeck = getDOMCards();
+//shuffle the deck
+shuffle(cardDeck);
+//put the shuffled cards back into the DOM
+replaceCardsInDOM();
+
+
+//This grabs all existing cards from the DOM and creates an array of them
+function getDOMCards() {
+    const allDOMCards = document.querySelectorAll(".card");
+    //since the cards were taken from the DOM, they are all Node elements
+    //and need to be converted into string data types to use them
+    return nodeListToString(allDOMCards);
+}
+
+//turns a NodeList into an array of strings
+function nodeListToString(nodeList) {
+    let strArr = [];
+    //make sure the nodeList is an array, then map through each node to extract the innerHTML
+    Array.from(nodeList).map(node => {
+        //put the node's innerHTML into strArr
+       return strArr.push(node.innerHTML);
+    });
+    return strArr;
+}
+
+// Shuffle function from http://stackoverflow.com/a/2450976
+// this will alter the array that's passed to it
+function shuffle(array) {
+    //set current index to the last element
+    let currentIndex = array.length - 1;
+    let lastIndex, randomIndex;
+
+    //loops through array backwards until reaching zero
+    while (currentIndex > 0) {
+        //generate a random number
+        randomIndex = Math.floor(Math.random() * currentIndex);
+
+        currentIndex -= 1;
+
+        //store the currentIndex temporarily
+        lastIndex = array[currentIndex];
+
+        //then swap the currentIndex element with the randomIndex
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = lastIndex;
+    }
+}
+
+//this converts the array of cards (cardDeck) back into DOM elements
+function convertCards() {
+    //cardContainer will hold all the cards
+    //it's a table row element that we'll append each card (table data) to
+    let cardContainer = document.createElement("tr");
+
+    for (let i = 0; i < cardDeck.length; i++) {
+        //create a table data element for each card
+        let card = document.createElement("td");
+        card.innerHTML = cardDeck[i];
+
+        //add class 'card' to each
+        card.classList.add("card");
+        card.classList.add("hidden");
+        //keep the original identifying class of the particular img, ex. 'bird' for the bird img
+        card.classList.add($(cardDeck[i]).attr("class"));
+        cardContainer.appendChild(card);
+    }
+    return cardContainer;
+}
+
+function replaceCardsInDOM() {
+    const newCards = convertCards();
+    //replace all the old unshuffled cards in the DOM with the newly shuffled cards
+    document.querySelector(".card-container").innerHTML = newCards.innerHTML;
+}
+
+
 let turnedCards = [];
 let matchingCards = [];
 let gameOver = false;
-let moves = 0;
-let callTime;
+let movesTaken = 0;
+let callTime = 0;
 let sec = 0;
 let min = 0;
 
-getCards();
-
-$('.card').on("click", function() {
-    //ignore card if it's already flipped
+//flip cards when they're clicked
+$('.card').on("click", function () {
+    //Ignore if it's already flipped
     if (!($(this).hasClass("flip"))) {
         flipCard(this);
         checkTurnedCards(this);
         //each click = 1 move
-        moves += 1;
-        displayMoves(moves);
+        movesTaken += 1;
+        displayMoves(movesTaken);
         updateRatingStars();
         //start timer when first card is clicked
-        if (moves === 1) {
+        if (movesTaken === 1) {
             startTimer();
         }
     }
     return;
 });
 
+
+
 function startTimer() {
     callTime = setInterval(timer, 1000);
     return;
-}
-
-//grab the existing cards from the DOM
-function initialDeck() {
-    let existingCards = [];
-    existingCards = document.querySelectorAll(".card");
-    return nodeListToString(existingCards);
-}
-
-//turn the existingCards array into a string array
-function nodeListToString(card) {
-    let strArr = [];
-    for (let img in card) {
-        if (card.hasOwnProperty(img)) {
-            strArr.push(card[img].innerHTML);
-        }
-    }
-    return strArr;
-}
-
-function getCards() {
-    let cardContainer = createCards();
-    document.querySelector(".card-container").innerHTML = cardContainer.innerHTML;
-    return;
-}
-
-function createCards() {
-    //create table row and append table data(cards) to it
-    let cardContainer = document.createElement("tr");
-    for (let i = 0; i < shuffledCards.length; i++) {
-        //create td for each card
-        let td = document.createElement("td");
-        td.innerHTML = shuffledCards[i];
-
-        //add class 'card' to each
-        td.classList.add("card");
-        td.classList.add("hidden");
-        //keep the original identifying class of the particular img, ex. 'bird' for the bird img
-        td.classList.add($(shuffledCards[i]).attr("class"));
-        cardContainer.appendChild(td);
-    }
-    return cardContainer;
 }
 
 
@@ -83,10 +118,10 @@ function flipCard(card) {
     return;
 }
 
-//show the number of moves taken
-function displayMoves(moves) {
+//show the number of movesTaken taken
+function displayMoves(movesTaken) {
     let p = document.querySelector(".moves");
-    p.innerHTML = `Moves Taken: ${moves}`;
+    p.innerHTML = `Moves Taken: ${movesTaken}`;
     return;
 }
 
@@ -96,9 +131,9 @@ function checkTurnedCards(card) {
         turnedCards.push(card);
         //if there's 2 face up cards, check if they match
         if (turnedCards.length === 2) {
-            checkMatch(turnedCards[0], turnedCards[1]);
-            //check if all cards are matched
-            if (matchingCards.length === startingCards.length) {
+            testMatch(turnedCards[0], turnedCards[1]);
+            //check if all cards are matched and player won
+            if (matchingCards.length === cardDeck.length) {
                 gameOver = true;
                 updateRatingStars();
                 showWinningMsg();
@@ -115,7 +150,7 @@ function checkTurnedCards(card) {
     return;
 }
 
-function checkMatch(card1, card2) {
+function testMatch(card1, card2) {
     //check if the two turned cards match
     let matching = checkClass(turnedCards[0], turnedCards[1]);
     if (matching) {
@@ -131,7 +166,7 @@ function checkMatch(card1, card2) {
         return 0;
     }
 }
-
+//this takes two cards and checks if their class names match
 function checkClass(card1, card2) {
     let class1Arr = [];
     let class2Arr = [];
@@ -144,7 +179,7 @@ function checkClass(card1, card2) {
     class1 = class1[1];
     class2 = class2[1];
     //return true if card images match
-    if (class1 == class2) {
+    if (class1 === class2) {
         return true;
     }
     else {
@@ -152,32 +187,24 @@ function checkClass(card1, card2) {
     }
 }
 
-function showWinningMsg() {
-    let stars = document.querySelector(".star-container").innerHTML;
-    let time = timer();
-
-    $(".winning-msg").toggleClass("show-msg");
-    document.querySelector(".winning-time").innerHTML = `Total time taken: ${time}`;
-    document.querySelector(".winning-stars").innerHTML = `Star Rating: ${stars}`;
-}
-
 
 function updateRatingStars() {
     //limited to 3 stars
     let starContainer = document.querySelector(".star-container");
-    //depending on moves taken change the class of fa-star between an empty and colored star
-    if (moves <= 22) {
+    //depending on movesTaken taken change the class of fa-star between an empty and colored star
+    if (movesTaken <= 22) {
         // three stars
         starContainer.innerHTML = "<i class='fa fa-star'> </i><i class='fa fa-star'> </i><i class='fa fa-star'> </i>";
-    } else if (moves > 22 && moves < 46) {
+    } else if (movesTaken > 22 && movesTaken < 46) {
         // two stars
         starContainer.innerHTML = "<i class='fa fa-star'> </i><i class='fa fa-star'> </i><i class='far fa-star'> </i>";
-    } else{
+    } else {
         // one star
         starContainer.innerHTML = "<i class='fa fa-star'> </i><i class='far fa-star'> </i><i class='far fa-star'> </i>";
     }
 }
 
+//run timer while game is running
 function timer() {
     let p = document.querySelector(".timer");
     let output;
@@ -205,24 +232,15 @@ function timer() {
     return output;
 }
 
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
+function showWinningMsg() {
+    let stars = document.querySelector(".star-container").innerHTML;
+    let time = timer();
 
-    return array;
+    $(".winning-msg").toggleClass("show-msg");
+    document.querySelector(".winning-time").innerHTML = `Total time taken: ${time}`;
+    document.querySelector(".winning-stars").innerHTML = `Star Rating: ${stars}`;
 }
 
-$(".replay").click(function replay() {
-    location.reload();
-});
-
-
-
+//reload page if user clicks the replay button
+document.querySelector(".replay").addEventListener("click", () => location.reload());
